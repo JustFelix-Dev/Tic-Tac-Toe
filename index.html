@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic_Tac_Toe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
+</head>
+<style>
+    *{
+     box-sizing: border-box;
+     margin:0;
+     padding:0;
+    }
+    body{
+        background-color: orangered;
+       
+    }
+
+    /* Landing Page */
+    section {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        background-color: transparent;
+        border: 0px solid transparent;
+        box-shadow: 0 0 10px black, 0 0 7px black;
+        width: 80%;
+        min-height:auto;
+    }
+    img {
+        position:absolute;
+        top: -5vh;
+        left: 38vw;
+    }
+    .wrapper{
+        text-align: center;
+        width: 70%;
+        margin: 3rem auto;
+    }
+    .innerCenter h1{
+        color: white;
+        font-family: 'Kaushan Script', cursive;
+    }
+    label{
+        color: white;
+        font-family: 'Croissant One', cursive;
+    }
+    input[type="text"]{
+        border: none;
+        outline: none;
+        border-bottom: 2px solid white;
+        background-color: transparent;
+        margin-bottom: 22px;
+        width: 70%;
+        padding: .5rem;
+        color: white;
+        font-weight: 500;
+    }
+    input[type="text"]:focus{
+        border-bottom: 3px solid white;
+        transition: all linear 100ms;
+    }
+    button{
+        border: none;
+         background-color: white;
+         color: orangered;
+         padding: 8px 60px;
+         border-radius: 18px;
+         font-weight: 700;
+         transition: all ease-out 300ms;
+    }
+    button:hover{
+        transform: scale(0.97);
+        cursor: pointer;
+
+    }
+
+    @media screen and (max-width:700px){
+        img{
+            left: 34vw;
+        }
+    }
+</style>
+<body>
+    <section class="center">
+        <img src="./566294.png" alt="" width="70px" height="70px">
+        <div class="innerCenter">
+            <div class="wrapper">
+                <h1>TIC-TAC-TOE</h1> <br> <br>
+                <label for="playerOne">Player One :</label> <br>
+                <input type="text" id="playerOne"> <br>
+                <label for="playerTwo">Player Two:</label> <br>
+                <input type="text" id="playerTwo"> <br>
+                <button onclick="startGame()">Start Game</button>
+            </div>
+        </div><br>
+       
+    </section>
+<script>
+    var players=[]
+    const startGame=()=>{
+        var player1 = playerOne.value 
+        var player2 = playerTwo.value
+        players.push(player1)
+        players.push(player2)
+        localStorage.setItem('localPlayers',JSON.stringify(players))
+        playerOne.value = "";playerTwo.value = "";
+        window.location.href = "game.html"
+    }
+</script>
+</body>
+</html>

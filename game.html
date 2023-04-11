@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+</head>
+<style>
+
+     *{
+     box-sizing: border-box;
+     margin:0;
+     padding:0;
+    }
+    
+    body{
+        background-color: orangered;
+    }
+
+    .wrapper{
+        margin-block: 2rem;
+     display: flex;
+     gap: 2rem;
+     justify-content: center;
+     align-items: center;
+    }
+
+    .flexBox{
+        width: 40%;
+        min-width: 300px;
+        display:flex;
+        gap: 1rem;
+        flex-direction: column;
+        background-color: transparent;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .grid-container{
+       display: grid;
+       grid-template-columns: repeat(3,90px);
+       gap: 1rem;
+    }
+
+   .grid-container .box {
+    background-color:white;
+    margin: 3px 3px;
+    height: 90px;
+    color: orangered;
+    text-align: center;
+    line-height: 90px;
+    font-family: 'Kaushan Script', cursive;
+    font-size:40px;
+    }
+
+    .flexBox h1{
+        color: white;
+        font-family: cursive;
+    }
+
+    input[type="text"]{
+        text-align: right;
+        outline: none;
+        border: none;
+        background-color: transparent;
+    }
+  
+    .board {
+        align-self: center;
+        width: 41.5%;
+        border-radius: 50px;
+        box-shadow: 0 0 10px black, 0 0 40px black;
+        background-color: transparent;
+        padding: 30px;
+    }
+    .board table {
+        border-collapse: collapse;
+        background-color: white;
+        width: 100%;
+        padding: 10px;
+        height: 110px;
+        text-align: center;
+        font-weight: 540;
+    }
+    #displayWinner{
+        background-color: white;
+        text-align: center;
+        width: 80%;
+        color: orangered;
+        padding: 5px 30px;
+        font-weight: 900;
+        border-radius: 40px;
+    }
+    button {
+        background-color: white;
+        color: orangered;
+        font-weight: 700;
+        padding: 6px 30px;
+        border: none;
+        border-radius: 20px;
+        transition: all ease-out 200ms;
+        cursor: pointer;
+    }
+    button:hover {
+        transform: scale(0.97);
+    }
+    .buttons{
+        display: flex;
+        justify-content: space-between;
+    }
+     .music{
+        position: absolute;
+        top: 0;
+        left: 50%;
+        border-radius: 0;
+  }
+
+  /* Responsiveness */
+  @media screen and (max-width:900px){
+    .wrapper{
+        flex-direction: column;
+    }
+    .board{
+        min-width: 400px;
+    }
+    .music{
+        left: 40%;
+    }
+  }
+</style>
+<body>
+    <div class="wrapper">
+        <div class="flexBox">
+            <h1>TIC-TAC-TOE</h1>
+            <div class="grid-container">
+                <button class="box" id="box1" onclick="play(event)"></button>
+                <button class="box" id="box2" onclick="play(event)"></button>
+                <button class="box" id="box3" onclick="play(event)"></button>
+                <button class="box" id="box4" onclick="play(event)"></button>
+                <button class="box" id="box5" onclick="play(event)"></button>
+                <button class="box" id="box6" onclick="play(event)"></button>
+                <button class="box" id="box7" onclick="play(event)"></button>
+                <button class="box" id="box8" onclick="play(event)"></button>
+                <button class="box" id="box9" onclick="play(event)"></button>
+            </div>
+            <div id="displayWinner" style="display: none;">
+            </div>
+        </div>
+           <div class="board">
+                 <table border="7" id="dashboard">
+                 </table><br>
+                 <div class="buttons">
+                     <button onclick="newGame()">New Game</button>
+                     <button onclick="gameClear()">Reset Game</button>
+                 </div>
+           </div>
+    </div>
+    
+
+    <audio id="myAudio" src="./Soft_Life.mp3">
+    </audio>
+    <button onclick="mysong()" id="playing" class="music">Play Music &#9658;</button>
+    <script>
+        
+        var players =JSON.parse(localStorage.getItem("localPlayers"));
+          for (let index = 0; index < players.length; index++) {
+        dashboard.innerHTML =`
+                          <tr>
+                            <th>Players</th>
+                            <th>Scores</th>
+                            </tr>
+                            <tr>
+                                <td>${players[0]}</td>
+                                <td><input type="text" id="firstPlayer" value="0" readonly></td>
+                            </tr>
+                            <tr>
+                                <td>${players[1]}</td>
+                                <td><input type="text" id="secondPlayer" value="0" readonly></td>
+                            </tr>
+        `
+    
+     }
+     var isPlaying = false;
+     function mysong(){
+         let audio = document.getElementById('myAudio');
+         isPlaying ? audio.pause() : audio.play()
+         audio.onplaying = function(){
+             playing.innerHTML = "Pause &#9208;"
+             isPlaying = true;
+            }
+            audio.onpause = function(){
+                playing.innerHTML = "Play &#9658;"
+                isPlaying = false;
+            }
+        }
+
+        let tic = "X";
+        const play=(e)=>{
+            if(e.target.innerHTML==""){
+                if(tic == "X"){
+                e.target.innerText = "X";
+                tic = "O"
+                 }else if(tic == "O"){
+                e.target.innerText = "O";
+                tic = "X"
+            }
+            }else{
+                alert("Played");
+            }
+            
+// FIRST PLAYER -X
+              
+                if(box1.innerText =="X" && box2.innerText=="X" && box3.innerText=="X"){
+                        displayWinner.style.display = "flex"
+                       displayWinner.innerHTML = `${players[0]} Wins!`
+                       box1.style.backgroundColor = "green"
+                       box2.style.backgroundColor = "green"
+                       box3.style.backgroundColor = "green"
+                       firstScoreBoard= Number(firstPlayer.value) + 1
+                       firstPlayer.value = firstScoreBoard;
+                       setTimeout(gameClear,600)
+                    } 
+                
+
+                 if (box4.innerText =="X" && box5.innerText=="X" && box6.innerText=="X"){
+                    displayWinner.style.display = "flex";
+                    displayWinner.innerHTML = `${players[0]} Wins!`
+                       box4.style.backgroundColor = "green"
+                       box5.style.backgroundColor = "green"
+                       box6.style.backgroundColor = "green"
+                       firstScoreBoard= Number(firstPlayer.value) + 1
+                       firstPlayer.value = firstScoreBoard;
+                       setTimeout(gameClear,600)
+
+                }else if(box7.innerText =="X" && box8.innerText=="X" && box9.innerText=="X"){
+                    displayWinner.style.display = "flex";
+                    displayWinner.innerHTML = `${players[0]} Wins!`
+                       box7.style.backgroundColor = "green"
+                       box8.style.backgroundColor = "green"
+                       box9.style.backgroundColor = "green"
+                       firstScoreBoard= Number(firstPlayer.value) + 1
+                       firstPlayer.value = firstScoreBoard;
+                       setTimeout(gameClear,600)
+
+                }else if(box1.innerText =="X" && box4.innerText=="X" && box7.innerText=="X"){
+                    displayWinner.style.display = "flex";
+                    displayWinner.innerHTML = `${players[0]} Wins!`
+                       box1.style.backgroundColor = "green"
+                       box4.style.backgroundColor = "green"
+                       box7.style.backgroundColor = "green"
+                       firstScoreBoard= Number(firstPlayer.value) + 1
+                       firstPlayer.value = firstScoreBoard;
+                       setTimeout(gameClear,600)
+
+                }else if(box2.innerText =="X" && box5.innerText=="X" && box8.innerText=="X"){
+                    displayWinner.style.display = "flex";
+                    displayWinner.innerHTML = `${players[0]} Wins!`
+                       box2.style.backgroundColor = "green"
+                       box5.style.backgroundColor = "green"
+                       box8.style.backgroundColor = "green"
+                       firstScoreBoard= Number(firstPlayer.value) + 1
+                       firstPlayer.value = firstScoreBoard;
+                       setTimeout(gameClear,600)
+
+            }else if(box3.innerText =="X" && box6.innerText=="X" && box9.innerText=="X"){
+                      displayWinner.style.display = "flex";
+                         displayWinner.innerHTML = `${players[0]} Wins!`
+                       box3.style.backgroundColor = "green"
+                       box6.style.backgroundColor = "green"
+                       box9.style.backgroundColor = "green"
+                       firstScoreBoard= Number(firstPlayer.value) + 1
+                       firstPlayer.value = firstScoreBoard;
+                       setTimeout(gameClear,600)
+
+            }else if(box1.innerText =="X" && box5.innerText=="X" && box9.innerText=="X"){
+                         displayWinner.style.display = "flex";
+                    displayWinner.innerHTML =`${players[0]} Wins!`
+                       box1.style.backgroundColor = "green"
+                       box5.style.backgroundColor = "green"
+                       box9.style.backgroundColor = "green"
+                       firstScoreBoard= Number(firstPlayer.value) + 1
+                       firstPlayer.value = firstScoreBoard;
+                       setTimeout(gameClear,600)
+
+            }else if(box3.innerText =="X" && box5.innerText=="X" && box7.innerText=="X"){
+                     displayWinner.style.display = "flex";
+                    displayWinner.innerHTML = `${players[0]} Wins!`
+                       box3.style.backgroundColor = "green"
+                       box5.style.backgroundColor = "green"
+                       box7.style.backgroundColor = "green"
+                       firstScoreBoard= Number(firstPlayer.value) + 1
+                       firstPlayer.value = firstScoreBoard;
+                       setTimeout(gameClear,600)
+            
+            }
+
+            // SECOND  PLAYER - O
+
+            else if(box1.innerText =="O" && box2.innerText=="O" && box3.innerText=="O"){
+                displayWinner.style.display = "block";
+                       displayWinner.innerHTML = `${players[1]} Wins!`
+                       box1.style.backgroundColor = "green"
+                       box2.style.backgroundColor = "green"
+                       box3.style.backgroundColor = "green"
+                       secondScoreBoard= Number(secondPlayer.value) + 1
+                       secondPlayer.value = secondScoreBoard;
+                       setTimeout(gameClear,600)
+                    
+                } 
+                else if (box4.innerText =="O" && box5.innerText=="O" && box6.innerText=="O"){
+                    displayWinner.style.display = "block";
+                    displayWinner.innerHTML = `${players[1]} Wins!`
+                       box4.style.backgroundColor = "green"
+                       box5.style.backgroundColor = "green"
+                       box6.style.backgroundColor = "green"
+                       secondScoreBoard= Number(secondPlayer.value) + 1
+                       secondPlayer.value = secondScoreBoard;
+                       setTimeout(gameClear,600)
+
+                }else if(box7.innerText =="O" && box8.innerText=="O" && box9.innerText=="O"){
+                    displayWinner.style.display = "block";
+                    displayWinner.innerHTML = `${players[1]} Wins!`
+                       box7.style.backgroundColor = "green"
+                       box8.style.backgroundColor = "green"
+                       box9.style.backgroundColor = "green"
+                       secondScoreBoard= Number(secondPlayer.value) + 1
+                       secondPlayer.value = secondScoreBoard;
+                       setTimeout(gameClear,600)
+
+                }else if(box1.innerText =="O" && box4.innerText=="O" && box7.innerText=="O"){
+                    displayWinner.style.display = "block";
+                    displayWinner.innerHTML = `${players[1]} Wins!`
+                       box1.style.backgroundColor = "green"
+                       box4.style.backgroundColor = "green"
+                       box7.style.backgroundColor = "green"
+                       secondScoreBoard= Number(secondPlayer.value) + 1
+                       secondPlayer.value = secondScoreBoard;
+                       setTimeout(gameClear,600)
+
+                }else if(box2.innerText =="O" && box5.innerText=="O" && box8.innerText=="O"){
+                    displayWinner.style.display = "block";
+                    displayWinner.innerHTML = `${players[1]} Wins!`
+                       box2.style.backgroundColor = "green"
+                       box5.style.backgroundColor = "green"
+                       box8.style.backgroundColor = "green"
+                       secondScoreBoard= Number(secondPlayer.value) + 1
+                       secondPlayer.value = secondScoreBoard;
+                       setTimeout(gameClear,600)
+
+            }else if(box3.innerText =="O" && box6.innerText=="O" && box9.innerText=="O"){
+                displayWinner.style.display = "block";
+                    displayWinner.innerHTML = `${players[1]} Wins!`
+                       box3.style.backgroundColor = "green"
+                       box6.style.backgroundColor = "green"
+                       box9.style.backgroundColor = "green"
+                       secondScoreBoard= Number(secondPlayer.value) + 1
+                       secondPlayer.value = secondScoreBoard;
+                       setTimeout(gameClear,600)
+
+            }else if(box1.innerText =="O" && box5.innerText=="O" && box9.innerText=="O"){
+                displayWinner.style.display = "block";
+                    displayWinner.innerHTML = `${players[1]} Wins!`
+                       box1.style.backgroundColor = "green"
+                       box5.style.backgroundColor = "green"
+                       box9.style.backgroundColor = "green"
+                       secondScoreBoard= Number(secondPlayer.value) + 1
+                       secondPlayer.value = secondScoreBoard;
+                       setTimeout(gameClear,600)
+
+            }else if(box3.innerText =="O" && box5.innerText=="O" && box7.innerText=="O"){
+                displayWinner.style.display = "block";
+                    displayWinner.innerHTML = `${players[1]} Wins!`
+                       box3.style.backgroundColor = "green"
+                       box5.style.backgroundColor = "green"
+                       box7.style.backgroundColor = "green"
+                       secondScoreBoard= Number(secondPlayer.value) + 1
+                       secondPlayer.value = secondScoreBoard;
+                       setTimeout(gameClear,600)
+            
+            }else{}
+    }
+
+            const newGame=()=>{
+            box1.innerText = "";box2.innerText = "";box3.innerText = "";box4.innerText = "";box5.innerText = "";box6.innerText = "";box7.innerText = "";box8.innerText = "";box9.innerText = "";
+            displayWinner.innerHTML = '';
+            displayWinner.style.display = "none"
+
+             box1.style.backgroundColor = ""; box2.style.backgroundColor = ""; box3.style.backgroundColor = ""; box4.style.backgroundColor = ""; box5.style.backgroundColor = ""; box6.style.backgroundColor = ""; box7.style.backgroundColor = ""; box8.style.backgroundColor = ""; box9.style.backgroundColor = "";
+                firstPlayer.value = "0"; secondPlayer.value ="0"
+            }
+
+        const gameClear=()=>{
+            box1.innerText = "";box2.innerText = "";box3.innerText = "";box4.innerText = "";box5.innerText = "";box6.innerText = "";box7.innerText = "";box8.innerText = "";box9.innerText = "";
+            displayWinner.innerHTML = '';
+            displayWinner.style.display = "none"
+                   box1.style.backgroundColor = ""; box2.style.backgroundColor = ""; box3.style.backgroundColor = ""; box4.style.backgroundColor = ""; box5.style.backgroundColor = ""; box6.style.backgroundColor = ""; box7.style.backgroundColor = ""; box8.style.backgroundColor = ""; box9.style.backgroundColor = "";
+
+        }
+
+   
+    </script>
+</body>
+</html>
