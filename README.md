@@ -14,7 +14,7 @@ Welcome to my Tic-Tac-Toe game! This simple yet beautiful game is built using HT
 
 ## Play the Game
 
-You can play the game online by visiting [this link](https://your-game-link.com).
+You can play the game online by visiting [this link](https://justfelix-dev.github.io/Tic-Tac-Toe/).
 
 ## Features
 
